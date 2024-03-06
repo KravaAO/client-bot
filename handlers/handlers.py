@@ -47,3 +47,7 @@ async def send_random_value(callback: types.CallbackQuery):
     await callback.answer('')
     await callback.message.answer('coming soon\n'
                                   'in development')
+
+
+def test_func():
+    pass
