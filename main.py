@@ -1,6 +1,6 @@
 import asyncio
 from aiogram import Bot, Dispatcher
-from data.coinfig import tg_bot_token_test
+from data.config import tg_bot_token_test
 from handlers import handlers
 
 

@@ -45,5 +45,5 @@ async def send_random_value(callback: types.CallbackQuery):
 @router.callback_query(F.data == 'back')
 async def send_random_value(callback: types.CallbackQuery):
     await callback.answer('')
-    await callback.message.answer('coming soon\n'
-                                  'in development')
+    await callback.message.edit_text('coming soon\n'
+                                     'in development', reply_markup=kb.main)
