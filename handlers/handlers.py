@@ -2,12 +2,14 @@ from aiogram import Router, F, types
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
 import keyboard.inline_keyboard as kb
+from data import database as db
 
 router = Router()
 
 
 @router.message(CommandStart())
 async def cmd_start(message: Message):
+    await db.cmd_start_db(message.from_user.id)
     await message.answer(
         f'Hello {message.from_user.full_name},  i`m client assistant ',
         reply_markup=kb.main)
