@@ -5,14 +5,18 @@ import keyboard.inline_keyboard as kb
 from data import database as db
 
 router = Router()
+user_full_name = ''
 
 
 @router.message(CommandStart())
 async def cmd_start(message: Message):
+    global user_full_name
     await db.cmd_start_db(message.from_user.id)
+    user_full_name = message.from_user.full_name
     await message.answer(
-        f'Hello {message.from_user.full_name},  i`m client assistant ',
-        reply_markup=kb.main)
+        f'Hello {user_full_name},  i`m client assistant ',
+        reply_markup=await kb.get_main_keyboard())
+    return user_full_name
 
 
 @router.message(Command('help'))
@@ -25,7 +29,9 @@ async def get_help(message: Message):
 @router.callback_query(F.data == "settings")
 async def send_random_value(callback: types.CallbackQuery):
     await callback.answer('You selected settings')
-    await callback.message.answer('Succeed settings')
+    await callback.message.edit_text(
+        f'Their u can change exchanges and coins\n in development',
+        reply_markup=await kb.get_settings())
 
 
 profile_text = 'there will be ur profile from our bd\n' \
@@ -47,5 +53,6 @@ async def send_random_value(callback: types.CallbackQuery):
 @router.callback_query(F.data == 'back')
 async def send_random_value(callback: types.CallbackQuery):
     await callback.answer('')
-    await callback.message.edit_text('coming soon\n'
-                                     'in development', reply_markup=kb.main)
+    await callback.message.edit_text(
+        f'Hello {user_full_name},  i`m client assistant ',
+        reply_markup=await kb.get_main_keyboard())
