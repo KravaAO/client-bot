@@ -27,8 +27,17 @@ async def get_profile():
 
 async def get_settings():
     keyboard = InlineKeyboardBuilder()
-    keyboard.add(InlineKeyboardButton(text='exchanges', callback_data='back'))
+    keyboard.add(InlineKeyboardButton(text='exchanges', callback_data='settings_exchanges'))
     keyboard.add(InlineKeyboardButton(text='coins', callback_data='back'))
     keyboard.add(InlineKeyboardButton(text='Back', callback_data='back'))
 
+    return keyboard.adjust(2).as_markup()
+
+
+async def get_settings_exchanges():
+    exchanges = ['okx', 'mexc', 'binace', 'huobi', 'bitget', 'bybit']
+    keyboard = InlineKeyboardBuilder()
+    for exchange in exchanges:
+        keyboard.add(InlineKeyboardButton(text=exchange, callback_data='back'))
+    keyboard.add(InlineKeyboardButton(text='Back', callback_data='back'))
     return keyboard.adjust(2).as_markup()

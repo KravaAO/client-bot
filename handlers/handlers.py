@@ -10,11 +10,12 @@ user_full_name = ''
 
 @router.message(CommandStart())
 async def cmd_start(message: Message):
-    global user_full_name
+    global user_full_name, user_id
     await db.cmd_start_db(message.from_user.id)
     user_full_name = message.from_user.full_name
+    user_id = message.from_user.id
     await message.answer(
-        f'Hello {user_full_name},  i`m client assistant ',
+        f'Hello {user_full_name}, i`m client assistant ',
         reply_markup=await kb.get_main_keyboard())
     return user_full_name
 
@@ -34,14 +35,12 @@ async def send_random_value(callback: types.CallbackQuery):
         reply_markup=await kb.get_settings())
 
 
-profile_text = 'there will be ur profile from our bd\n' \
-               'in development\n'
-
-
 @router.callback_query(F.data == 'get_profile')
 async def send_random_value(callback: types.CallbackQuery):
     await callback.answer('You selected profile')
-    await callback.message.edit_text(profile_text, reply_markup=await kb.get_profile())
+    await callback.message.edit_text((f'there will be ur profile from our bd\n '
+                                      f'in development\n'
+                                      f'{str(db.show_data_profile(user_id))}'), reply_markup=await kb.get_profile())
 
 
 @router.callback_query(F.data == 'get_pay')
@@ -56,3 +55,11 @@ async def send_random_value(callback: types.CallbackQuery):
     await callback.message.edit_text(
         f'Hello {user_full_name},  i`m client assistant ',
         reply_markup=await kb.get_main_keyboard())
+
+
+@router.callback_query(F.data == "settings_exchanges")
+async def send_random_value(callback: types.CallbackQuery):
+    await callback.answer('')
+    await callback.message.edit_text(
+        f'Their u can change exchanges\n in development',
+        reply_markup=await kb.get_settings_exchanges())
