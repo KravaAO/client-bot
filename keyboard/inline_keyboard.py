@@ -1,7 +1,6 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-
 main = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text='Settings', callback_data='settings')],
     [InlineKeyboardButton(text='Pay', callback_data='get_pay')],
@@ -45,3 +44,17 @@ async def get_settings_exchanges():
     return keyboard.adjust(2).as_markup()
 
 
+async def pay_choice():
+    keyboard = InlineKeyboardBuilder()
+    keyboard.add(InlineKeyboardButton(text='25$/10d', callback_data='rate_25_10'))
+    keyboard.add(InlineKeyboardButton(text='50$/30d', callback_data='rate_50_30'))
+    keyboard.add(InlineKeyboardButton(text='75$/60d', callback_data='rate_75_60'))
+    keyboard.add(InlineKeyboardButton(text='back', callback_data='back'))
+    return keyboard.adjust(3).as_markup()
+
+
+async def get_link():
+    keyboard = InlineKeyboardBuilder()
+    keyboard.add(InlineKeyboardButton(text='Pay', callback_data='link'))
+
+    return keyboard.adjust(1).as_markup()

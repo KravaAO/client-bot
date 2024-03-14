@@ -30,22 +30,43 @@ async def get_help(message: Message):
 async def settings(callback: types.CallbackQuery):
     await callback.answer('You selected settings')
     await callback.message.edit_text(
-        f'Their u can change exchanges and coins\n in development',
+        f'There u can change exchanges and coins\n in development',
         reply_markup=await kb.get_settings())
 
 
 @router.callback_query(F.data == 'get_profile')
 async def show_profile(callback: types.CallbackQuery):
     await callback.answer('You selected profile')
-    await callback.message.edit_text((f'there will be ur profile from our bd\n '
-                                      f'in development\n'
-                                      f'{str(db.show_data_profile(user_id))}'), reply_markup=await kb.get_profile())
+    await callback.message.edit_text(f'Your ID: {user_id}', reply_markup=await kb.get_profile())
 
 
 @router.callback_query(F.data == 'get_pay')
 async def get_pay(callback: types.CallbackQuery):
-    await callback.answer('You selected get_pay', show_alert=True)
-    await callback.message.answer('Succeed get_pay')
+    await callback.answer('')
+    await callback.message.edit_text(f'{user_full_name}💎Select the number of days you want to buy?',
+                                     reply_markup=await kb.pay_choice())
+
+
+@router.callback_query(F.data.startswith('rate_'))
+async def rate(callback: types.CallbackQuery):
+    rate_data = callback.data.split('_')[1]
+    if rate_data == '25':
+        await callback.message.answer(f'💰You have chosen the $25 tariff for 10 days!\n'
+                                      f'‼️The payment link is available within 30 minutes.',
+                                      reply_markup=await kb.get_link())
+    elif rate_data == '50':
+        await callback.message.answer(f'💰You have chosen the $50 tariff for 30 days!\n'
+                                      f'‼️The payment link is available within 30 minutes.',
+                                      reply_markup=await kb.get_link())
+    elif rate_data == '75':
+        await callback.message.answer(f'💰You have chosen the $75 tariff for 60 days!\n'
+                                      f'‼️The payment link is available within 30 minutes.',
+                                      reply_markup=await kb.get_link())
+
+
+@router.callback_query(F.data == 'link')
+async def pay_link(callback: types.CallbackQuery):
+    await callback.answer('*link*', show_alert=True)
 
 
 @router.callback_query(F.data == 'back')
@@ -60,7 +81,7 @@ async def back_button(callback: types.CallbackQuery):
 async def settings_exchanges(callback: types.CallbackQuery):
     await callback.answer('')
     await callback.message.edit_text(
-        f'Their u can change exchanges\n in development',
+        f'Choose the exchanges from which you want to receive signals',
         reply_markup=await kb.get_settings_exchanges())
 
 
@@ -89,23 +110,22 @@ async def back_in_profile(callback: types.CallbackQuery):
 
 @router.callback_query()
 async def choice_exchanges(callback: types.CallbackQuery):
-    await callback.answer('')
     choice = callback.data
     if choice == 'okx':
-        await callback.message.reply('You chose okx')
+        await callback.answer('You select Okx')
         await db.add_exchanges(user_id, choice)
     elif choice == 'binance':
-        await callback.message.reply('You chose binance')
+        await callback.answer('You select Binance')
         await db.add_exchanges(user_id, choice)
     elif choice == 'bybit':
-        await callback.message.reply('You chose bybit')
+        await callback.answer('You select Bybit')
         await db.add_exchanges(user_id, choice)
     elif choice == 'mexc':
-        await callback.message.reply('You chose mexc')
+        await callback.answer('You select Mexc')
         await db.add_exchanges(user_id, choice)
     elif choice == 'huobi':
-        await callback.message.reply('You chose mexc')
+        await callback.answer('You select Huobi')
         await db.add_exchanges(user_id, choice)
     elif choice == 'bitget':
-        await callback.message.reply('You chose mexc')
+        await callback.answer('You chose bitget')
         await db.add_exchanges(user_id, choice)
