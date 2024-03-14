@@ -13,7 +13,7 @@ async def get_main_keyboard():
     keyboard = InlineKeyboardBuilder()
     keyboard.add(InlineKeyboardButton(text='Pay', callback_data='get_pay'))
     keyboard.add(InlineKeyboardButton(text='profile', callback_data='get_profile'))
-    keyboard.add(InlineKeyboardButton(text='about program', callback_data='info'))
+    keyboard.add(InlineKeyboardButton(text='Bot Guide', callback_data='info'))
 
     return keyboard.adjust(2).as_markup()
 
@@ -60,5 +60,6 @@ async def pay_choice():
 async def get_link():
     keyboard = InlineKeyboardBuilder()
     keyboard.add(InlineKeyboardButton(text='Pay', callback_data='link'))
+    keyboard.add(InlineKeyboardButton(text='back', callback_data='get_pay'))
 
     return keyboard.adjust(1).as_markup()

@@ -12,7 +12,9 @@ async def cmd_start(message: Message):
     await db.cmd_start_db(message.from_user.id)
     user_full_name = message.from_user.full_name
     await message.answer(
-        f'Hello {user_full_name}, i`m client assistant ',
+        f'👋{user_full_name} Welcome to Arbitrage bot\n'
+        f'This is a bot for finding the difference in currency prices on different exchanges.\n'
+        f'⚠️Exchanges are always risks! Be attentive to every signal.',
         reply_markup=await kb.get_main_keyboard())
     return user_full_name
 
@@ -51,17 +53,17 @@ async def get_pay(callback: types.CallbackQuery):
 async def rate(callback: types.CallbackQuery):
     rate_data = callback.data.split('_')[1]
     if rate_data == '25':
-        await callback.message.answer(f'💰You have chosen the $25 tariff for 10 days!\n'
-                                      f'‼️The payment link is available within 30 minutes.',
-                                      reply_markup=await kb.get_link())
+        await callback.message.edit_text(f'💰You have chosen the $25 tariff for 10 days!\n'
+                                         f'‼️The payment link is available within 30 minutes.',
+                                         reply_markup=await kb.get_link())
     elif rate_data == '50':
-        await callback.message.answer(f'💰You have chosen the $50 tariff for 30 days!\n'
-                                      f'‼️The payment link is available within 30 minutes.',
-                                      reply_markup=await kb.get_link())
+        await callback.message.edit_text(f'💰You have chosen the $50 tariff for 30 days!\n'
+                                         f'‼️The payment link is available within 30 minutes.',
+                                         reply_markup=await kb.get_link())
     elif rate_data == '75':
-        await callback.message.answer(f'💰You have chosen the $75 tariff for 60 days!\n'
-                                      f'‼️The payment link is available within 30 minutes.',
-                                      reply_markup=await kb.get_link())
+        await callback.message.edit_text(f'💰You have chosen the $75 tariff for 60 days!\n'
+                                         f'‼️The payment link is available within 30 minutes.',
+                                         reply_markup=await kb.get_link())
 
 
 @router.callback_query(F.data == 'link')
@@ -105,9 +107,7 @@ async def back_in_profile(callback: types.CallbackQuery):
 
 @router.callback_query(F.data == "info")
 async def back_in_profile(callback: types.CallbackQuery):
-    await callback.answer('')
-    await callback.message.reply(f'This is a bot for finding the difference in currency prices on different exchanges.'
-                                 f'\n Exchanges are always risks! be attentive to every signal')
+    await callback.answer('Link for guide', show_alert=True)
 
 
 @router.callback_query()
@@ -120,4 +120,3 @@ async def choice_exchanges(callback: types.CallbackQuery):
         f'Choose the exchanges from which you want to receive signals',
         reply_markup=new_keyboard_markup
     )
-
