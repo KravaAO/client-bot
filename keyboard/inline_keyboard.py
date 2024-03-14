@@ -1,5 +1,6 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
+from data import database as db
 
 main = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text='Settings', callback_data='settings')],
@@ -35,11 +36,14 @@ async def get_settings():
     return keyboard.adjust(2).as_markup()
 
 
-async def get_settings_exchanges():
+async def get_settings_exchanges(user_id):
     exchanges = ['okx', 'mexc', 'binance', 'huobi', 'bitget', 'bybit']
     keyboard = InlineKeyboardBuilder()
     for exchange in exchanges:
-        keyboard.add(InlineKeyboardButton(text=exchange, callback_data=exchange))
+        if await db.check_exchange(user_id, exchange):
+            keyboard.add(InlineKeyboardButton(text=f'✅{exchange}', callback_data=exchange))
+        else:
+            keyboard.add(InlineKeyboardButton(text=f'{exchange}', callback_data=exchange))
     keyboard.add(InlineKeyboardButton(text='Back', callback_data='back_in_settings'))
     return keyboard.adjust(2).as_markup()
 

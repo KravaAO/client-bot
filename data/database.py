@@ -37,6 +37,15 @@ async def add_exchanges(user_id, selected_exchange):
         db.commit()
 
 
+async def check_exchange(user_id, exchange):
+    user = cur.execute("SELECT * FROM accounts WHERE tg_id = ?", (user_id,)).fetchone()
+    if user:
+        exchanges = user[2]
+        if exchange in exchanges.split(','):
+            return True
+    return False
+
+
 def show_data_profile(user_id):
     result = cur.execute("SELECT tg_id FROM accounts WHERE tg_id == {key}".format(key=user_id))
     return result.fetchone()[0]
