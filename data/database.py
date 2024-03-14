@@ -20,6 +20,14 @@ async def cmd_start_db(user_id):
         db.commit()
 
 
+async def add_exchanges(user_id, selected_exchange):
+    user = cur.execute("SELECT * FROM accounts WHERE tg_id = ?", (user_id,)).fetchone()
+    if user:
+        new_exchanges = user['exchanges'] + "," + selected_exchange if user['exchanges'] else selected_exchange
+        cur.execute("UPDATE accounts SET exchanges = ? WHERE tg_id = ?", (new_exchanges, user_id))
+        db.commit()
+
+
 def show_data_profile(user_id):
     result = cur.execute("SELECT tg_id FROM accounts WHERE tg_id == {key}".format(key=user_id))
     return result.fetchone()[0]

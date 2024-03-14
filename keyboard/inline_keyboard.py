@@ -13,23 +13,25 @@ async def get_main_keyboard():
     keyboard = InlineKeyboardBuilder()
     keyboard.add(InlineKeyboardButton(text='Pay', callback_data='get_pay'))
     keyboard.add(InlineKeyboardButton(text='profile', callback_data='get_profile'))
-    keyboard.add(InlineKeyboardButton(text='Settings', callback_data='settings'))
+    keyboard.add(InlineKeyboardButton(text='about program', callback_data='info'))
 
     return keyboard.adjust(2).as_markup()
 
 
 async def get_profile():
     keyboard = InlineKeyboardBuilder()
+    keyboard.add(InlineKeyboardButton(text='Start', callback_data='back'))
+    keyboard.add(InlineKeyboardButton(text='Settings', callback_data='settings'))
     keyboard.add(InlineKeyboardButton(text='Back', callback_data='back'))
 
-    return keyboard.adjust(1).as_markup()
+    return keyboard.adjust(2).as_markup()
 
 
 async def get_settings():
     keyboard = InlineKeyboardBuilder()
     keyboard.add(InlineKeyboardButton(text='exchanges', callback_data='settings_exchanges'))
     keyboard.add(InlineKeyboardButton(text='coins', callback_data='back'))
-    keyboard.add(InlineKeyboardButton(text='Back', callback_data='back'))
+    keyboard.add(InlineKeyboardButton(text='Back', callback_data='back_in_profile'))
 
     return keyboard.adjust(2).as_markup()
 
@@ -38,6 +40,6 @@ async def get_settings_exchanges():
     exchanges = ['okx', 'mexc', 'binace', 'huobi', 'bitget', 'bybit']
     keyboard = InlineKeyboardBuilder()
     for exchange in exchanges:
-        keyboard.add(InlineKeyboardButton(text=exchange, callback_data='back'))
-    keyboard.add(InlineKeyboardButton(text='Back', callback_data='back'))
+        keyboard.add(InlineKeyboardButton(text=exchange, callback_data=exchange))
+    keyboard.add(InlineKeyboardButton(text='Back', callback_data='back_in_settings'))
     return keyboard.adjust(2).as_markup()

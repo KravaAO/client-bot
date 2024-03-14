@@ -28,7 +28,7 @@ async def get_help(message: Message):
 
 
 @router.callback_query(F.data == "settings")
-async def send_random_value(callback: types.CallbackQuery):
+async def settings(callback: types.CallbackQuery):
     await callback.answer('You selected settings')
     await callback.message.edit_text(
         f'Their u can change exchanges and coins\n in development',
@@ -36,7 +36,7 @@ async def send_random_value(callback: types.CallbackQuery):
 
 
 @router.callback_query(F.data == 'get_profile')
-async def send_random_value(callback: types.CallbackQuery):
+async def show_profile(callback: types.CallbackQuery):
     await callback.answer('You selected profile')
     await callback.message.edit_text((f'there will be ur profile from our bd\n '
                                       f'in development\n'
@@ -44,13 +44,13 @@ async def send_random_value(callback: types.CallbackQuery):
 
 
 @router.callback_query(F.data == 'get_pay')
-async def send_random_value(callback: types.CallbackQuery):
+async def get_pay(callback: types.CallbackQuery):
     await callback.answer('You selected get_pay', show_alert=True)
     await callback.message.answer('Succeed get_pay')
 
 
 @router.callback_query(F.data == 'back')
-async def send_random_value(callback: types.CallbackQuery):
+async def back_button(callback: types.CallbackQuery):
     await callback.answer('')
     await callback.message.edit_text(
         f'Hello {user_full_name},  i`m client assistant ',
@@ -58,8 +58,31 @@ async def send_random_value(callback: types.CallbackQuery):
 
 
 @router.callback_query(F.data == "settings_exchanges")
-async def send_random_value(callback: types.CallbackQuery):
+async def settings_exchanges(callback: types.CallbackQuery):
     await callback.answer('')
     await callback.message.edit_text(
         f'Their u can change exchanges\n in development',
         reply_markup=await kb.get_settings_exchanges())
+
+
+@router.callback_query(F.data == "back_in_profile")
+async def back_in_profile(callback: types.CallbackQuery):
+    await callback.answer('')
+    await callback.message.edit_text(
+        f'Their u can change exchanges\n in development',
+        reply_markup=await kb.get_profile())
+
+
+@router.callback_query(F.data == "back_in_settings")
+async def back_in_profile(callback: types.CallbackQuery):
+    await callback.answer('')
+    await callback.message.edit_text(
+        f'Their u can change exchanges\n in development',
+        reply_markup=await kb.get_settings())
+
+
+@router.callback_query(F.data == "info")
+async def back_in_profile(callback: types.CallbackQuery):
+    await callback.answer('')
+    await callback.message.reply(f'This is a bot for finding the difference in currency prices on different exchanges.'
+                                 f'\n Exchanges are always risks! be attentive to every signal')
