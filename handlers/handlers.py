@@ -86,3 +86,27 @@ async def back_in_profile(callback: types.CallbackQuery):
     await callback.answer('')
     await callback.message.reply(f'This is a bot for finding the difference in currency prices on different exchanges.'
                                  f'\n Exchanges are always risks! be attentive to every signal')
+
+
+@router.callback_query()
+async def choice_exchanges(callback: types.CallbackQuery):
+    await callback.answer('')
+    choice = callback.data
+    if choice == 'okx':
+        await callback.message.reply('You chose okx')
+        await db.add_exchanges(user_id, choice)
+    elif choice == 'binance':
+        await callback.message.reply('You chose binance')
+        await db.add_exchanges(user_id, choice)
+    elif choice == 'bybit':
+        await callback.message.reply('You chose bybit')
+        await db.add_exchanges(user_id, choice)
+    elif choice == 'mexc':
+        await callback.message.reply('You chose mexc')
+        await db.add_exchanges(user_id, choice)
+    elif choice == 'huobi':
+        await callback.message.reply('You chose mexc')
+        await db.add_exchanges(user_id, choice)
+    elif choice == 'bitget':
+        await callback.message.reply('You chose mexc')
+        await db.add_exchanges(user_id, choice)

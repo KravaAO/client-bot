@@ -37,9 +37,11 @@ async def get_settings():
 
 
 async def get_settings_exchanges():
-    exchanges = ['okx', 'mexc', 'binace', 'huobi', 'bitget', 'bybit']
+    exchanges = ['okx', 'mexc', 'binance', 'huobi', 'bitget', 'bybit']
     keyboard = InlineKeyboardBuilder()
     for exchange in exchanges:
         keyboard.add(InlineKeyboardButton(text=exchange, callback_data=exchange))
     keyboard.add(InlineKeyboardButton(text='Back', callback_data='back_in_settings'))
     return keyboard.adjust(2).as_markup()
+
+
