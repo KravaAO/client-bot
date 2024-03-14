@@ -23,15 +23,12 @@ async def cmd_start_db(user_id):
 async def add_exchanges(user_id, selected_exchange):
     user = cur.execute("SELECT * FROM accounts WHERE tg_id == {key}".format(key=user_id)).fetchone()
     if user:
-        exchanges_index = 2  # Индекс поля "exchanges" в кортеже
+        exchanges_index = 2
         current_exchanges = user[exchanges_index]
 
-        # Проверяем, есть ли выбранная биржа уже в списке бирж пользователя
         if selected_exchange in current_exchanges.split(","):
-            # Если биржа уже есть, удаляем ее из списка
             updated_exchanges = ",".join(ex for ex in current_exchanges.split(",") if ex != selected_exchange)
         else:
-            # Если биржи еще нет, просто добавляем ее к списку
             updated_exchanges = current_exchanges + "," + selected_exchange if current_exchanges else selected_exchange
 
         cur.execute("UPDATE accounts SET exchanges = ? WHERE tg_id = ?", (updated_exchanges, user_id))

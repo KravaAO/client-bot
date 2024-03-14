@@ -5,7 +5,6 @@ import keyboard.inline_keyboard as kb
 from data import database as db
 
 router = Router()
-user_full_name = ''
 
 
 @router.message(CommandStart())

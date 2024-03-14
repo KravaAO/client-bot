@@ -6,8 +6,8 @@ from data import database as db
 
 
 async def on_startup(_):
-    await db.db_start()
     print('bd is started')
+    await db.db_start()
 
 
 async def main():
