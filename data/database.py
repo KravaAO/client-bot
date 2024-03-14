@@ -14,9 +14,11 @@ async def db_start():
 
 
 async def cmd_start_db(user_id):
-    user = cur.execute("SELECT * FROM accounts WHERE tg_id == {key}".format(key=user_id)).fetchall()
+    cur.execute("SELECT * FROM accounts WHERE tg_id = ?", (user_id,))
+    user = cur.fetchall()
+
     if not user:
-        cur.execute("INSERT INTO accounts (tg_id) VALUES ({key})".format(key=user_id))
+        cur.execute("INSERT INTO accounts (tg_id, exchanges) VALUES (?, ?)", (user_id, "mexc"))
         db.commit()
 
 
