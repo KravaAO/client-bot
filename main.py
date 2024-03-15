@@ -1,7 +1,7 @@
 import asyncio
 from aiogram import Bot, Dispatcher
 from data.config import tg_bot_token_test
-from handlers import handlers
+from handlers import handlers, client
 from data import database as db
 
 
@@ -14,6 +14,7 @@ async def main():
     bot = Bot(token=tg_bot_token_test)
     dp = Dispatcher()
     dp.include_routers(handlers.router)
+    dp.include_routers(client.router)
 
     await bot.delete_webhook(drop_pending_updates=True)
     await db.db_start()

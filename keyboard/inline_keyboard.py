@@ -2,12 +2,6 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from data import database as db
 
-main = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text='Settings', callback_data='settings')],
-    [InlineKeyboardButton(text='Pay', callback_data='get_pay')],
-    [InlineKeyboardButton(text='profile', callback_data='get_profile')]
-])
-
 
 async def get_main_keyboard():
     keyboard = InlineKeyboardBuilder()
@@ -20,18 +14,9 @@ async def get_main_keyboard():
 
 async def get_profile():
     keyboard = InlineKeyboardBuilder()
-    keyboard.add(InlineKeyboardButton(text='Start', callback_data='back'))
-    keyboard.add(InlineKeyboardButton(text='Settings', callback_data='settings'))
+    keyboard.add(InlineKeyboardButton(text='Exchanges', callback_data='settings_exchanges'))
+    keyboard.add(InlineKeyboardButton(text='Coins', callback_data='back'))
     keyboard.add(InlineKeyboardButton(text='Back', callback_data='back'))
-
-    return keyboard.adjust(2).as_markup()
-
-
-async def get_settings():
-    keyboard = InlineKeyboardBuilder()
-    keyboard.add(InlineKeyboardButton(text='exchanges', callback_data='settings_exchanges'))
-    keyboard.add(InlineKeyboardButton(text='coins', callback_data='back'))
-    keyboard.add(InlineKeyboardButton(text='Back', callback_data='back_in_profile'))
 
     return keyboard.adjust(2).as_markup()
 
@@ -44,7 +29,7 @@ async def get_settings_exchanges(user_id):
             keyboard.add(InlineKeyboardButton(text=f'✅{exchange}', callback_data=exchange))
         else:
             keyboard.add(InlineKeyboardButton(text=f'{exchange}', callback_data=exchange))
-    keyboard.add(InlineKeyboardButton(text='Back', callback_data='back_in_settings'))
+    keyboard.add(InlineKeyboardButton(text='Back', callback_data='back_in_profile'))
     return keyboard.adjust(2).as_markup()
 
 

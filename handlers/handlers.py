@@ -26,21 +26,6 @@ async def get_help(message: Message):
     await message.answer(help_text)
 
 
-@router.callback_query(F.data == "settings")
-async def settings(callback: types.CallbackQuery):
-    await callback.answer('You selected settings')
-    await callback.message.edit_text(
-        f'There u can change exchanges and coins\n in development',
-        reply_markup=await kb.get_settings())
-
-
-@router.callback_query(F.data == 'get_profile')
-async def show_profile(callback: types.CallbackQuery):
-    user_id = callback.from_user.id
-    await callback.answer('You selected profile')
-    await callback.message.edit_text(f'Your ID: {user_id}', reply_markup=await kb.get_profile())
-
-
 @router.callback_query(F.data == 'get_pay')
 async def get_pay(callback: types.CallbackQuery):
     user_full_name = callback.from_user.full_name
@@ -71,52 +56,7 @@ async def pay_link(callback: types.CallbackQuery):
     await callback.answer('*link*', show_alert=True)
 
 
-@router.callback_query(F.data == 'back')
-async def back_button(callback: types.CallbackQuery):
-    user_full_name = callback.from_user.full_name
-    await callback.answer('')
-    await callback.message.edit_text(
-        f'Hello {user_full_name},  i`m client assistant ',
-        reply_markup=await kb.get_main_keyboard())
-
-
-@router.callback_query(F.data == "settings_exchanges")
-async def settings_exchanges(callback: types.CallbackQuery):
-    user_id = callback.from_user.id
-    await callback.answer('')
-    await callback.message.edit_text(
-        f'Choose the exchanges from which you want to receive signals',
-        reply_markup=await kb.get_settings_exchanges(user_id))
-
-
-@router.callback_query(F.data == "back_in_profile")
-async def back_in_profile(callback: types.CallbackQuery):
-    await callback.answer('')
-    await callback.message.edit_text(
-        f'Their u can change exchanges\n in development',
-        reply_markup=await kb.get_profile())
-
-
-@router.callback_query(F.data == "back_in_settings")
-async def back_in_profile(callback: types.CallbackQuery):
-    await callback.answer('')
-    await callback.message.edit_text(
-        f'Their u can change exchanges\n in development',
-        reply_markup=await kb.get_settings())
-
-
 @router.callback_query(F.data == "info")
 async def back_in_profile(callback: types.CallbackQuery):
     await callback.answer('Link for guide', show_alert=True)
 
-
-@router.callback_query()
-async def choice_exchanges(callback: types.CallbackQuery):
-    user_id = callback.from_user.id
-    choice = callback.data
-    await db.add_exchanges(user_id, choice)
-    new_keyboard_markup = await kb.get_settings_exchanges(user_id)
-    await callback.message.edit_text(
-        f'Choose the exchanges from which you want to receive signals',
-        reply_markup=new_keyboard_markup
-    )
