@@ -58,5 +58,5 @@ async def pay_link(callback: types.CallbackQuery):
 
 @router.callback_query(F.data == "info")
 async def back_in_profile(callback: types.CallbackQuery):
-    await callback.answer('Link for guide', show_alert=True)
+    await callback.answer('https://telegra.ph/Arbitrage-Bot-User-Guide-03-16', show_alert=True)
 
