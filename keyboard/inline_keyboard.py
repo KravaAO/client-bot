@@ -7,7 +7,7 @@ async def get_main_keyboard():
     keyboard = InlineKeyboardBuilder()
     keyboard.add(InlineKeyboardButton(text='Pay', callback_data='get_pay'))
     keyboard.add(InlineKeyboardButton(text='profile', callback_data='get_profile'))
-    keyboard.add(InlineKeyboardButton(text='Bot Guide', callback_data='info'))
+    keyboard.add(InlineKeyboardButton(text='Bot Guide', url='https://telegra.ph/Arbitrage-Bot-User-Guide-03-16'))
 
     return keyboard.adjust(2).as_markup()
 
