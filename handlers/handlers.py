@@ -14,7 +14,7 @@ async def cmd_start(message: Message):
     await message.answer(
         f'👋{user_full_name} Welcome to Arbitrage bot\n'
         f'This is a bot for finding the difference in currency prices on different exchanges.\n'
-        f'⚠️Exchanges are always risks! Be attentive to every signal.',
+        f'\n⚠️Exchanges are always risks! Be attentive to every signal.',
         reply_markup=await kb.get_main_keyboard())
     return user_full_name
 
@@ -22,7 +22,8 @@ async def cmd_start(message: Message):
 @router.message(Command('help'))
 async def get_help(message: Message):
     help_text = '/start - for start the bot\n' \
-                '/help - for get help with command\n'
+                '/help - for get help with command\n' \
+                '/guide - for get guide about bot'
     await message.answer(help_text)
 
 
@@ -60,3 +61,8 @@ async def pay_link(callback: types.CallbackQuery):
 async def back_in_profile(callback: types.CallbackQuery):
     await callback.answer('https://telegra.ph/Arbitrage-Bot-User-Guide-03-16', show_alert=True)
 
+
+@router.message(Command('guide'))
+async def get_help(message: Message):
+    help_text = 'coming soon'
+    await message.answer(help_text)

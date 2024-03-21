@@ -22,7 +22,7 @@ async def get_profile():
 
 
 async def get_settings_exchanges(user_id):
-    exchanges = ['okx', 'mexc', 'binance', 'huobi', 'bitget', 'bybit']
+    exchanges = ['okx', 'mexc', 'binance', 'huobi', 'bitget', 'bybit', 'whitebit', 'kucoin']
     keyboard = InlineKeyboardBuilder()
     for exchange in exchanges:
         if await db.check_exchange(user_id, exchange):
